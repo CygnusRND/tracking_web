@@ -1,0 +1,36 @@
+{% extends "base_public.html" %}
+
+{% block title %}Tracking {{ tracking.code }}{% endblock %}
+
+{% block content %}
+<section class="tracker-panel">
+    <div class="tracker-header">
+        <div>
+            <h1>Tracking {{ tracking.code }}</h1>
+            <p>{{ tracking.description }}</p>
+        </div>
+        <a class="ghost-btn" href="/">New search</a>
+    </div>
+
+    <div class="latest-status">
+        <span>Latest status</span>
+        <h2>{{ latest.status|default:"No updates yet" }}</h2>
+        <p>{{ latest.location }}{% if latest.event_time %} · {{ latest.event_time }}{% endif %}</p>
+    </div>
+
+    <div class="timeline">
+        {% for event in events %}
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>{{ event.status }}</h3>
+                    <p class="meta">{{ event.location }} · {{ event.event_time }}</p>
+                    <p>{{ event.details }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty">No tracking events yet. Check back soon.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

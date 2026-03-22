@@ -1,0 +1,25 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Audit Logs{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="panel-header">
+        <h1>Audit Logs</h1>
+    </div>
+    <div class="panel-body">
+        {% for log in logs %}
+            <div class="list-row">
+                <div>
+                    <strong>{{ log.admin_user }}</strong>
+                    <span>{{ log.get_action_display }}</span>
+                    {% if log.tracking %}<span>{{ log.tracking.code }}</span>{% endif %}
+                </div>
+                <div class="muted">{{ log.created_at }}{% if log.ip_address %} · {{ log.ip_address }}{% endif %}</div>
+            </div>
+        {% empty %}
+            <p class="empty">No audit logs recorded.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

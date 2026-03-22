@@ -1,0 +1,26 @@
+{% extends "base_auth.html" %}
+
+{% block title %}Set Up 2FA{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <h1>Set up 2FA</h1>
+    <p>Scan the QR code and enter your verification token.</p>
+    <div class="qr-block">
+        {% if QR_URL %}
+            <img src="{{ QR_URL }}" alt="2FA QR code">
+        {% else %}
+            <p class="muted">QR code not available. Refresh the page and try again.</p>
+        {% endif %}
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+        {% for field in wizard.form.visible_fields %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+        {% endfor %}
+        <button class="primary-btn" type="submit">Verify</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Tracking Form{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="panel-header">
+        <h1>{% if tracking %}Edit{% else %}Create{% endif %} Tracking</h1>
+    </div>
+    <form method="post" class="form-grid">
+        {% csrf_token %}
+        <label>Tracking code</label>
+        {{ form.code }}
+        <label>Description</label>
+        {{ form.description }}
+        <button class="primary-btn" type="submit">Save</button>
+    </form>
+</section>
+
+{% if tracking %}
+<section class="panel">
+    <div class="panel-header">
+        <h2>Status timeline</h2>
+        <a class="ghost-btn" href="/admin/tracking/{{ tracking.id }}/events/new/">Add status</a>
+    </div>
+    <div class="panel-body">
+        {% for event in tracking.events.all %}
+            <div class="list-row">
+                <div>
+                    <strong>{{ event.status }}</strong>
+                    <span>{{ event.location }}</span>
+                </div>
+                <div class="row-actions">
+                    <a href="/admin/tracking/{{ tracking.id }}/events/{{ event.id }}/edit/">Edit</a>
+                    <a class="danger" href="/admin/tracking/{{ tracking.id }}/events/{{ event.id }}/delete/">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty">No status updates yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base_auth.html" %}
+
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <h1>Admin Login</h1>
+    <p>Two-factor authentication is required for admin access.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+        {% if wizard.form.errors %}
+            <div class="form-error">Please check the details and try again.</div>
+        {% endif %}
+        {% for field in wizard.form.visible_fields %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+        {% endfor %}
+        <button class="primary-btn" type="submit">Continue</button>
+    </form>
+</div>
+{% endblock %}

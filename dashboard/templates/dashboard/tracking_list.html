@@ -1,0 +1,33 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Tracking Numbers{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="panel-header">
+        <h1>Tracking Numbers</h1>
+        <a class="primary-btn" href="/admin/tracking/new/">New tracking</a>
+    </div>
+    <form method="get" class="search-bar">
+        {{ form.query }}
+        <button class="ghost-btn" type="submit">Search</button>
+    </form>
+    <div class="panel-body">
+        {% for item in tracking_items %}
+            <div class="list-row">
+                <div>
+                    <strong>{{ item.code }}</strong>
+                    <span>{{ item.description }}</span>
+                </div>
+                <div class="row-actions">
+                    <a href="/admin/tracking/{{ item.id }}/edit/">Edit</a>
+                    <a href="/admin/tracking/{{ item.id }}/events/new/">Add status</a>
+                    <a class="danger" href="/admin/tracking/{{ item.id }}/delete/">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty">No tracking numbers yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<section class="admin-hero">
+    <div>
+        <h1>Admin Dashboard</h1>
+        <p>Monitor tracking activity and keep parcel updates accurate.</p>
+    </div>
+    <div class="stat-grid">
+        <div class="stat-card">
+            <span>Total tracking numbers</span>
+            <strong>{{ tracking_count }}</strong>
+        </div>
+        <div class="stat-card">
+            <span>Total events</span>
+            <strong>{{ event_count }}</strong>
+        </div>
+    </div>
+</section>
+
+<section class="panel">
+    <div class="panel-header">
+        <h2>Latest updates</h2>
+        <a class="ghost-btn" href="/admin/tracking/">Manage tracking</a>
+    </div>
+    <div class="panel-body">
+        {% for event in latest_events %}
+            <div class="list-row">
+                <div>
+                    <strong>{{ event.tracking.code }}</strong>
+                    <span>{{ event.status }}</span>
+                </div>
+                <div class="muted">{{ event.event_time }}</div>
+            </div>
+        {% empty %}
+            <p class="empty">No tracking events yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

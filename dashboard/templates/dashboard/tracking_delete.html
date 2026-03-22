@@ -1,0 +1,17 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Delete Tracking{% endblock %}
+
+{% block content %}
+<section class="panel danger">
+    <div class="panel-header">
+        <h1>Delete {{ tracking.code }}?</h1>
+    </div>
+    <p>This action permanently removes the tracking number and all events.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="danger-btn" type="submit">Confirm delete</button>
+        <a class="ghost-btn" href="/admin/tracking/">Cancel</a>
+    </form>
+</section>
+{% endblock %}

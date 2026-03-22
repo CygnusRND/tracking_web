@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Admin Login{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body class="admin auth">
+    <div class="admin-grid"></div>
+    <main class="auth-panel">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,227 @@
+:root {
+    --ink: #121014;
+    --muted: #6b6671;
+    --accent: #2d6cdf;
+    --accent-dark: #1b4ea6;
+    --danger: #d93036;
+    --surface: #f7f5fb;
+    --line: #e2deea;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.admin {
+    margin: 0;
+    font-family: "Segoe UI", "Gill Sans", "Calibri", sans-serif;
+    color: var(--ink);
+    background: linear-gradient(160deg, #f1f0ff, #f9f6fb);
+    min-height: 100vh;
+}
+
+.admin-grid {
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(rgba(45, 108, 223, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45, 108, 223, 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+}
+
+.admin-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+}
+
+.admin-nav a {
+    margin-left: 16px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.admin-page {
+    position: relative;
+    z-index: 1;
+    padding: 20px 8% 60px;
+    animation: fadeUp 0.5s ease;
+}
+
+.admin-hero {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 16px;
+    border: 1px solid var(--line);
+}
+
+.panel {
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    padding: 20px;
+}
+
+.panel.danger {
+    border-color: rgba(217, 48, 54, 0.4);
+    background: #fff2f2;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.panel-body {
+    margin-top: 16px;
+    display: grid;
+    gap: 12px;
+}
+
+.list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.list-row:last-child {
+    border-bottom: none;
+}
+
+.row-actions a {
+    margin-left: 12px;
+    text-decoration: none;
+    color: var(--accent-dark);
+    font-weight: 600;
+}
+
+.row-actions .danger {
+    color: var(--danger);
+}
+
+.search-bar {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.form-grid {
+    display: grid;
+    gap: 12px;
+    max-width: 520px;
+}
+
+.text-input, .text-area {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    font-size: 15px;
+}
+
+.text-area {
+    resize: vertical;
+}
+
+.primary-btn, .ghost-btn, .danger-btn {
+    padding: 10px 20px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.primary-btn {
+    background: var(--accent);
+    color: #fff;
+}
+
+.ghost-btn {
+    border: 1px solid var(--line);
+    color: var(--ink);
+    background: transparent;
+}
+
+.danger-btn {
+    background: var(--danger);
+    color: #fff;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.auth-panel {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 22px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    width: min(420px, 90vw);
+}
+
+.form-error {
+    background: #fff1f2;
+    color: #8d1a22;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(217, 48, 54, 0.4);
+}
+
+.qr-block img {
+    max-width: 100%;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 720px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .list-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
