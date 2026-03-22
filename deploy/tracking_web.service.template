@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn for tracking_web
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/tracking_web
+EnvironmentFile=/var/www/tracking_web/.env
+ExecStart=/var/www/tracking_web/.venv/bin/gunicorn --workers 3 --bind unix:/var/www/tracking_web/tracking_web.sock tracking_web.wsgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

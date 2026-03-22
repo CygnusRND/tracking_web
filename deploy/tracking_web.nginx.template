@@ -1,0 +1,13 @@
+server {
+    listen 80;
+    server_name example.com;
+
+    location /static/ {
+        alias /var/www/tracking_web/staticfiles/;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/var/www/tracking_web/tracking_web.sock;
+    }
+}
