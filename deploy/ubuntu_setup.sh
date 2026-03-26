@@ -56,6 +56,15 @@ if [[ ! -d "$PROJECT_DIR" ]]; then
   exit 1
 fi
 
+SERVER_NAMES="$DOMAIN"
+ALLOWED_HOSTS_VALUE="${DOMAIN},$(hostname -I | awk '{print $1}'),127.0.0.1"
+if [[ "$DOMAIN" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  SERVER_NAMES="$DOMAIN"
+else
+  SERVER_NAMES="$DOMAIN www.$DOMAIN"
+  ALLOWED_HOSTS_VALUE="${DOMAIN},www.${DOMAIN},$(hostname -I | awk '{print $1}'),127.0.0.1"
+fi
+
 echo "[2/8] Preparing Python environment..."
 cd "$PROJECT_DIR"
 if [[ ! -d .venv ]]; then
@@ -92,7 +101,7 @@ PY
   cat > .env <<ENV
 DEBUG=0
 SECRET_KEY=${SECRET_KEY}
-ALLOWED_HOSTS=${DOMAIN},$(hostname -I | awk '{print $1}'),127.0.0.1
+ALLOWED_HOSTS=${ALLOWED_HOSTS_VALUE}
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=${DB_NAME}
 DB_USER=${DB_USER}
@@ -139,7 +148,7 @@ echo "[7/8] Configuring Nginx..."
 cat > /etc/nginx/sites-available/tracking_web <<NGINX
 server {
     listen 80;
-    server_name ${DOMAIN};
+    server_name ${SERVER_NAMES};
 
     location /static/ {
         alias ${PROJECT_DIR}/staticfiles/;
@@ -147,6 +156,9 @@ server {
 
     location / {
         include proxy_params;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
         proxy_pass http://unix:${PROJECT_DIR}/tracking_web.sock;
     }
 }
